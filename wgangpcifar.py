@@ -17,12 +17,12 @@ import torch.autograd as autograd
 import torch
 import wandb
 
-wandb.init(entity= '', project='GAN')
+wandb.init(entity= 'fabacha22', project='GAN')
 
-os.makedirs("images_wgangpcifar", exist_ok=True)
+os.makedirs("images_wgangpcifar2", exist_ok=True)
 
 parser = argparse.ArgumentParser()
-parser.add_argument("--n_epochs", type=int, default=1000, help="number of epochs of training")
+parser.add_argument("--n_epochs", type=int, default=50, help="number of epochs of training")
 parser.add_argument("--batch_size", type=int, default=64, help="size of the batches")
 parser.add_argument("--lr", type=float, default=0.0002, help="adam: learning rate")
 parser.add_argument("--b1", type=float, default=0.5, help="adam: decay of first order momentum of gradient")
@@ -33,7 +33,7 @@ parser.add_argument("--img_size", type=int, default=32, help="size of each image
 parser.add_argument("--channels", type=int, default=3, help="number of image channels")
 parser.add_argument("--n_critic", type=int, default=5, help="number of training steps for discriminator per iter")
 parser.add_argument("--clip_value", type=float, default=0.01, help="lower and upper clip value for disc. weights")
-parser.add_argument("--sample_interval", type=int, default=400, help="interval betwen image samples")
+parser.add_argument("--sample_interval", type=int, default=400, help="interval between image samples")
 opt = parser.parse_args()
 print(opt)
 
@@ -203,10 +203,11 @@ for epoch in range(opt.n_epochs):
             )
 
             if batches_done % opt.sample_interval == 0:
-                save_image(fake_imgs.data[:25], "images_wgangpcifar/%d.png" % batches_done, nrow=5, normalize=True)
+                #save_image(fake_imgs.data[:25], "images_wgangpcifar/%d.png" % batches_done, nrow=5, normalize=True)
+                save_image(fake_imgs.data[0], "images_wgangpcifar2/%d.png" % batches_done, nrow=5, normalize=True)
 
                 # Log the generated images to wandb
-                img_grid = wandb.Image("images_wgangpcifar/%d.png" % batches_done)
+                img_grid = wandb.Image("images_wgangpcifar2/%d.png" % batches_done)
                 wandb.log({"generated_images": img_grid})
 
             batches_done += opt.n_critic
