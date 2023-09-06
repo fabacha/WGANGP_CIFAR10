@@ -19,7 +19,7 @@ import wandb
 
 wandb.init(entity= 'fabacha22', project='GAN')
 
-os.makedirs("images_wgangpcifar2", exist_ok=True)
+os.makedirs("images_wgangpcifar", exist_ok=True)
 
 parser = argparse.ArgumentParser()
 parser.add_argument("--n_epochs", type=int, default=50, help="number of epochs of training")
@@ -204,10 +204,10 @@ for epoch in range(opt.n_epochs):
 
             if batches_done % opt.sample_interval == 0:
                 #save_image(fake_imgs.data[:25], "images_wgangpcifar/%d.png" % batches_done, nrow=5, normalize=True)
-                save_image(fake_imgs.data[0], "images_wgangpcifar2/%d.png" % batches_done, nrow=5, normalize=True)
+                save_image(fake_imgs.data[0], "images_wgangpcifar/%d.png" % batches_done, nrow=5, normalize=True)
 
                 # Log the generated images to wandb
-                img_grid = wandb.Image("images_wgangpcifar2/%d.png" % batches_done)
+                img_grid = wandb.Image("images_wgangpcifar/%d.png" % batches_done)
                 wandb.log({"generated_images": img_grid})
 
             batches_done += opt.n_critic
